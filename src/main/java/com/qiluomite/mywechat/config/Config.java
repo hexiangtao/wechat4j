@@ -2,8 +2,11 @@ package com.qiluomite.mywechat.config;
 
 public class Config {
 
+	/*****是否开启自动回复******/
 	public static final boolean AUTO_REPLY = false;
+	/*****是否打印成员信息****/
 	public static final boolean PRINT_MEMBER_INFO = true;
+	/******是否开启自动添加好友******/
 	public static final boolean ADD_FRIEND = true;
 
 	public static final String HTTP_OK = "200";

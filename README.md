@@ -5,7 +5,8 @@
 ##  程序启动入口
 
 
-```import com.qiluomite.mywechat.component.WechatCore;
+````
+import com.qiluomite.mywechat.component.WechatCore;
 
 public class App extends WechatCore {
 
@@ -15,7 +16,8 @@ public class App extends WechatCore {
 
 	}
 
-}```
+}
+````
 
 
 入口类说明

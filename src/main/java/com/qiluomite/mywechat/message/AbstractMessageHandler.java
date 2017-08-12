@@ -1,6 +1,7 @@
 package com.qiluomite.mywechat.message;
 
 import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public abstract class AbstractMessageHandler implements IMessageHandler, TxtMess
 		this.meta = meta;
 	}
 
-	public  void webwxsendmsg(String content, String to) {
+	public void webwxsendmsg(String content, String to) {
 
 		if (!Config.AUTO_REPLY) {
 			LOGGER.warn("auto reply setting was off,please change the Config setting--");
@@ -47,7 +48,8 @@ public abstract class AbstractMessageHandler implements IMessageHandler, TxtMess
 
 		body.put("BaseRequest", meta.getBaseRequest());
 		body.put("Msg", Msg);
-		HttpRequest request = HttpRequest.post(url).contentType("application/json;charset=utf-8").header("Cookie", meta.getCookie());
+		HttpRequest request = HttpRequest.post(url).contentType("application/json;charset=utf-8").header("Cookie",
+				meta.getCookie());
 		new Thread(() -> {
 			try {
 				Thread.sleep(3000);
@@ -59,26 +61,43 @@ public abstract class AbstractMessageHandler implements IMessageHandler, TxtMess
 			}
 		}).start();
 	}
-	
-	public boolean download(JSONObject msg, MsgType msgType, String filePath) {
-		Map<String, String> headers = new HashMap<String, String>();
-		// JSONObject params = new JSONObject();
-		String url = meta.getBase_uri() + msgType.getDownloadPath();
 
-		if (msgType == MsgType.VIDEO || msgType == MsgType.SMALL_VIDEO) {
-			headers.put("Range", "bytes=0-");
-		}
-		// if (type.equals(MsgTypeEnum.MEDIA.getType())) {
-		// headers.put("Range", "bytes=0-");
-		// params.put("sender", msg.getString("FromUserName"));
-		// params.put("mediaid", msg.getString("MediaId"));
-		// params.put("filename", msg.getString("FileName"));
-		// }
-		// params.put("msgid", msg.getString("MsgId"));
-		// params.put("skey", meta.getSkey());
+	public boolean download(JSONObject msg, MsgType msgType) {
+
+		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Cookie", meta.getCookie());
-		url = url + "?MsgID=" + msg.getString("MsgId") + "&skey=" + meta.getSkey() + "&type=slave";
-		HttpRequest.get(url).headers(headers).receive(new File(filePath));
+		Map<String, Object> params = new HashMap<String, Object>();
+
+		String ext = "";
+		if (msgType == MsgType.PICTURE) {
+			ext = "jpg";
+		} else if (msgType == MsgType.VOICE) {
+			ext = "mp3";
+		} else if (msgType == MsgType.VIDEO || msgType == MsgType.SMALL_VIDEO) {
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+//			headers.put("Range", "bytes=0-");
+			ext = "mp4";
+		}
+		if (msgType == MsgType.MEDIA) {
+			headers.put("Range", "bytes=0-");
+			params.put("sender", msg.getString("FromUserName"));
+			params.put("mediaid", msg.getString("MediaId"));
+			params.put("filename", msg.getString("FileName"));
+		}
+		params.put("msgid", msg.getString("MsgId"));
+		params.put("skey", meta.getSkey());
+
+		String dirPath = meta.getConfig().get("app.media_path");
+		String filePath = dirPath + "/" + DateKit.dateFormat(new Date(), "yyyyMMddHHmmss_SSS") + "." + ext;
+		String host = meta.getBase_uri().endsWith("/") ? meta.getBase_uri() : meta.getBase_uri() + "/";
+		String url = host + msgType.getDownloadPath() + "?MsgID=" + msg.getString("MsgId") + "&skey=" + meta.getSkey()
+				+ "&type=slave";
+		 LOGGER.info("download url:{}",url);
+		HttpRequest.get(url, params, true).headers(headers).receive(new File(filePath));
 		return true;
 	}
 
@@ -126,7 +145,7 @@ public abstract class AbstractMessageHandler implements IMessageHandler, TxtMess
 
 		if (isSlefSend(msg)) {
 			LOGGER.info("你发送了一条消息 ");
-			return false;
+			return true;
 		}
 
 		if (msg.getString("FromUserName").indexOf("@@") != -1) {

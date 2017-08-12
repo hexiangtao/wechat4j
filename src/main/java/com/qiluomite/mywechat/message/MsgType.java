@@ -1,6 +1,7 @@
 package com.qiluomite.mywechat.message;
 
 public enum MsgType {
+	MEDIA(-1,"媒体消息","ebwxgetvideo"),
 	TXT(1,"文本消息",""),
 	PICTURE(3,"图片消息","webwxgetmsgimg"),
 	VOICE(34,"语音消息","webwxgetvoice"),
@@ -18,7 +19,7 @@ public enum MsgType {
 	SMALL_VIDEO(62,"小视频","webwxgetvideo"),
 	SYSNOTICE(9999,"SYSNOTICE",""),
 	SYSTEM(10000,"","系统消息E"),
-	撤回消息(10002,"撤回消息","");
+	MSG_ROLLBACK(10002,"撤回消息","");
 
 
 	private int type;

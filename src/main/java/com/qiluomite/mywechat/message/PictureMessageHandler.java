@@ -18,8 +18,7 @@ public class PictureMessageHandler extends AbstractMessageHandler {
 	@Override
 	public void process(JSONObject msg) {
 		LOGGER.warn("开始处理图片消息");
-		String imgDir = meta.getConfig().get("app.media_path");
-		String msgId = msg.getString("MsgId");
-		download(msg, MsgType.PICTURE, imgDir + "/" + msgId + ".jpg");
+		download(msg, MsgType.PICTURE);
+
 	}
 }

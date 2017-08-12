@@ -14,6 +14,7 @@ public class MessageHandler {
 
 	protected Logger logger = LoggerFactory.getLogger(MessageHandler.class);
 	private MessageHandlerFactory messageFactory;
+
 	public MessageHandler(WechatMeta wechatMeta) {
 		super();
 		messageFactory = new MessageHandlerFactory(wechatMeta);
@@ -34,7 +35,7 @@ public class MessageHandler {
 			}
 			IMessageHandler messageHandler = messageFactory.getMessageHandler(msgType);
 			if (messageHandler == null) {
-				throw new WechatException("无法找到对应的消息处理器");
+				logger.error("msgType:{},无法找到对应的消息处理器", msgType);
 			}
 			messageHandler.process(msg);
 		}

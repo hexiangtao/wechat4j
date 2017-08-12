@@ -29,6 +29,9 @@ public class MessageHandlerFactory {
 		handlers.put(MsgType.VOICE, new VoiceMessageHandler(meta));
 		handlers.put(MsgType.PICTURE, new PictureMessageHandler(meta));
 		handlers.put(MsgType.SHARE_MP, new MpMessageHandler(meta));
+		VideoMessageHandler videoMessageHandler = new VideoMessageHandler(meta);
+		handlers.put(MsgType.SMALL_VIDEO, videoMessageHandler);
+		handlers.put(MsgType.VIDEO, videoMessageHandler);
 	}
 
 }

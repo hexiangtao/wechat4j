@@ -3,6 +3,7 @@ package com.qiluomite.mywechat.bean;
 import com.blade.kit.DateKit;
 import com.blade.kit.json.JSONObject;
 import com.qiluomite.mywechat.config.Config;
+import com.qiluomite.mywechat.util.PropertyReader;
 
 public class WechatMeta {
 
@@ -22,8 +23,9 @@ public class WechatMeta {
 	protected JSONObject SyncKey;
 	protected JSONObject User;
 
-	public WechatMeta() {
-
+	protected PropertyReader config;
+	public WechatMeta(String configLocation) {
+		config = PropertyReader.load("classpath:config.properties");
 	}
 
 	public boolean isAlive() {
@@ -145,5 +147,10 @@ public class WechatMeta {
 	public void setWebpush_url(String webpush_url) {
 		this.webpush_url = webpush_url;
 	}
+
+	public PropertyReader getConfig() {
+		return config;
+	}
+
 
 }

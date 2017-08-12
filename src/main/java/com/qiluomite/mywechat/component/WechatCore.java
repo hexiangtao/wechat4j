@@ -11,6 +11,7 @@ import com.qiluomite.mywechat.bean.WechatMeta;
 import com.qiluomite.mywechat.config.Config;
 import com.qiluomite.mywechat.exception.WechatException;
 import com.qiluomite.mywechat.message.FileHandler;
+import com.qiluomite.mywechat.util.PropertyReader;
 
 public abstract class WechatCore extends WechatMeta {
 
@@ -23,6 +24,7 @@ public abstract class WechatCore extends WechatMeta {
 	private List<Task> userTasks = new ArrayList<Task>();
 
 	public WechatCore() {
+		super("classpath:config.properties");
 		System.setProperty("https.protocols", "TLSv1");
 		System.setProperty("jsse.enableSNIExtension", "false");
 		this.loginHandler = new LoginHandler(this);
@@ -52,7 +54,6 @@ public abstract class WechatCore extends WechatMeta {
 		loginHandler.openStatusNotify();
 		contactHandler.initLatestChatroom();
 		contactHandler.initContactList();
-		fileHandler.uploadFile("C:/gym_buglist.docx", null);
 
 	}
 

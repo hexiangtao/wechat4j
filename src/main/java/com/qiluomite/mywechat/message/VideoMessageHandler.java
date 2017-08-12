@@ -8,24 +8,24 @@ import com.blade.kit.json.JSONObject;
 import com.qiluomite.mywechat.bean.WechatMeta;
 import com.qiluomite.mywechat.util.PropertyReader;
 
-public class VoiceMessageHandler extends AbstractMessageHandler {
+public class VideoMessageHandler extends AbstractMessageHandler {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(VoiceMessageHandler.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(VideoMessageHandler.class);
 
-	public VoiceMessageHandler(WechatMeta meta) {
+	public VideoMessageHandler(WechatMeta meta) {
 		super(meta);
 		this.meta = meta;
 	}
 
 	@Override
 	public void process(JSONObject msg) {
-		LOGGER.warn("开始处理语音消息");
+		LOGGER.warn("开始处理视频消息");
 		PropertyReader pr = PropertyReader.load("classpath:config.properties");
 		String voiceDir = pr.get("app.media_path");
 		String msgId = msg.getString("MsgId");
 		FileKit.createDir(voiceDir, false);
-		String filePath = voiceDir + "/" + msgId + ".mp3";
-		download(msg, MsgType.VOICE, filePath);
+		String filePath = voiceDir + "/" + msgId + ".mp4";
+		download(msg, MsgType.VIDEO, filePath);
 
 	}
 

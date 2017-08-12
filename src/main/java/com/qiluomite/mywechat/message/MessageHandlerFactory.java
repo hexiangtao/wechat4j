@@ -28,7 +28,7 @@ public class MessageHandlerFactory {
 		handlers.put(MsgType.TXT, new TxtMessageHandler(meta));
 		handlers.put(MsgType.VOICE, new VoiceMessageHandler(meta));
 		handlers.put(MsgType.PICTURE, new PictureMessageHandler(meta));
-		handlers.put(MsgType.MP, new MpMessageHandler(meta));
+		handlers.put(MsgType.SHARE_MP, new MpMessageHandler(meta));
 	}
 
 }

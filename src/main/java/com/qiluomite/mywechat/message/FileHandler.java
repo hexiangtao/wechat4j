@@ -44,8 +44,6 @@ public class FileHandler {
 		params.put("uploadmediarequest", getUploadmediaRequest(fileMD5, file.length(), 0, file.length(), toUserName));
 		params.put("webwx_data_ticket", CookieUtil.getValueFromCookieStr(meta.getCookie(), "webwx_data_ticket"));
 		params.put("pass_ticket", meta.getPass_ticket());
-
-		 System.out.println(params);
 		HttpRequest request = HttpRequest.post("https://file.wx2.qq.com/cgi-bin/mmwebwx-bin/webwxuploadmedia?f=json")
 				.contentType("multipart/form-data").part("filename", file.getName(), contentType, file).send(params.toString().getBytes());
 

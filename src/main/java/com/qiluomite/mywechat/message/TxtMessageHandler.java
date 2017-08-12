@@ -37,9 +37,6 @@ public class TxtMessageHandler extends AbstractMessageHandler {
 		}
 		if (com.qiluomite.mywechat.config.Config.AUTO_REPLY) {
 			String fromUser = msg.getString("FromUserName");
-			if (fromUser.contains("深度")) {
-				return;
-			}
 			String ans = reply(fromUser, content);
 			LOGGER.info("回复:" + memberNickName + "：" + ans);
 			webwxsendmsg(ans, msg.getString("FromUserName"));

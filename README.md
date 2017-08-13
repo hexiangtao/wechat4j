@@ -68,7 +68,26 @@ app.msg_location=C:/wechat/msg.txt
 ````
 
 
-![Alt text](https://github.com/enohe/wechat4j/blob/master/%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.png)
+程序包结构,如下
+![Alt text](https://github.com/enohe/wechat4j/blob/master/%E5%8C%85%E7%BB%93%E6%9E%84.png)
+
+### 包结构说明:
+com.iyuexian.wechat4j    入口类
+com.iyuexian.wechat4j.config  配置信息及系统常量 
+com.iyuexian.wechat4j.conre   核心功能实现
+com.iyuexian.wechat4j.message   各种消息处理
+com.iyuexian.wechat4j.model     定义的各种实体类，比如，好友,微信群...
+
+
+WechatCore类启动步骤
+在run方法中依次调用如下方法
+````
+geetUUID()       获取微信接口获取UUID
+showQrcode()	 显示二维码,待用户扫码登陆		
+beginUserTask()   开始用户自定义的任务
+`````
+
+
 
 
 

@@ -74,7 +74,7 @@ app.msg_location=C:/wechat/msg.txt
 ### 包结构说明:
 #####  com.iyuexian.wechat4j    入口类
 ##### com.iyuexian.wechat4j.config  配置信息及系统常量 
-##### com.iyuexian.wechat4j.conre   核心功能实现
+##### com.iyuexian.wechat4j.core   核心功能实现
 ##### com.iyuexian.wechat4j.message   各种消息处理
 ##### com.iyuexian.wechat4j.model     定义的各种实体类，比如，好友,微信群...
 

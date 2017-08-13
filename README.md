@@ -1,12 +1,15 @@
-# wechatRobot
-一个用微信web接口实现的微信聊天机器人，支持消息监听，自动回复，添加好友，获取群成员列表
+# wechat4j
 
 
-##  程序启动入口
 
+
+
+##  程序入口
 
 ````
-import com.qiluomite.mywechat.component.WechatCore;
+package com.iyuexian.wechat4j;
+
+import com.iyuexian.wechat4j.core.WechatCore;
 
 public class App extends WechatCore {
 
@@ -17,11 +20,56 @@ public class App extends WechatCore {
 	}
 
 }
+
 ````
 
 
-入口类说明
-   定义任意类继承WechatCore，在main方法里调用该由该类的run()方法即可
+您可以使用自定义类继承WechatCore,添加自己需要的组件，例如下面代码添加了一个MessageListener，监听微信消息
+package com.iyuexian.wechat4j;
+
+import com.iyuexian.wechat4j.core.WechatCore;
+import com.iyuexian.wechat4j.plugin.MessageListener;
+
+public class  MyClass extends WechatCore {
+
+	public static void main(String[] args) throws InterruptedException {
+		App app = new App();
+		MessageListener t1 = new MessageListener(app);
+		app.run(t1);
+
+	}
+
+}
+
+
+##默认未开启机器人功能，您可以在Config类打开如下设置
+````
+	/*****是否开启自动回复******/
+	public static final boolean AUTO_REPLY = false;
+	/*****是否打印成员信息****/
+	public static final boolean PRINT_MEMBER_INFO = true;
+	/******是否开启自动添加好友******/
+	public static final boolean ADD_FRIEND = false;
+
+`````
+
+配置文件说明:
+
+````
+###机器人接入密钥######
+chat.key=7507257e2872417d9e4fb0e2764cf0ac
+chat.secret=36c3be794b4950dc
+chat.server_url=http://www.tuling123.com/openapi/api
+
+######消息本地存储路径####
+app.media_path=C:/wechat
+app.msg_location=C:/wechat/msg.txt
+
+````
+
+
+
+
 
 
 

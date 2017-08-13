@@ -93,8 +93,11 @@ beginUserTask()   开始用户自定义的任务
 
 
 以下是使用截图
+######### 控制台启动
 ![Alt text](https://github.com/enohe/wechat4j/blob/master/console.png)
 
+########## 聊天
+![Alt text](https://github.com/enohe/wechat4j/blob/master/chat.png)
 
 
 

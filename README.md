@@ -25,8 +25,8 @@ public class App extends WechatCore {
 
 
 您可以使用自定义类继承WechatCore,添加自己需要的组件，例如下面代码添加了一个MessageListener，监听微信消息
+````
 package com.iyuexian.wechat4j;
-
 import com.iyuexian.wechat4j.core.WechatCore;
 import com.iyuexian.wechat4j.plugin.MessageListener;
 
@@ -40,7 +40,7 @@ public class  MyClass extends WechatCore {
 	}
 
 }
-
+````
 
 ##默认未开启机器人功能，您可以在Config类打开如下设置
 ````

@@ -42,7 +42,7 @@ public class  MyClass extends WechatCore {
 }
 ````
 
-##默认未开启机器人功能，您可以在Config类打开如下设置
+## 默认未开启机器人功能，您可以在Config类打开如下设置
 ````
 	/*****是否开启自动回复******/
 	public static final boolean AUTO_REPLY = false;
@@ -53,7 +53,7 @@ public class  MyClass extends WechatCore {
 
 `````
 
-配置文件说明:
+## 配置文件说明:
 
 ````
 ###机器人接入密钥######

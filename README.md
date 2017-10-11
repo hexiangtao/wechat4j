@@ -24,7 +24,7 @@ public class App extends WechatCore {
 }
 
 ````
-
+请用JDK1.7编译
 
 您可以使用自定义类继承WechatCore,添加自己需要的组件，例如下面代码添加了一个MessageListener，监听微信消息
 ````

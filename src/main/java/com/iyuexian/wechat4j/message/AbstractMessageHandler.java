@@ -35,7 +35,7 @@ public abstract class AbstractMessageHandler implements IMessageHandler, TxtMess
 			LOGGER.warn("auto reply setting was off,please change the Config setting--");
 		}
 		String url = meta.getBase_uri() + "/webwxsendmsg?lang=zh_CN&pass_ticket=" + meta.getPass_ticket();
-		JSONObject body = new JSONObject();
+		final JSONObject body = new JSONObject();
 		RecordContainer.cache.add(to);
 		String clientMsgId = DateKit.getCurrentUnixTime() + StringKit.getRandomNumber(5);
 		JSONObject Msg = new JSONObject();
@@ -48,18 +48,24 @@ public abstract class AbstractMessageHandler implements IMessageHandler, TxtMess
 
 		body.put("BaseRequest", meta.getBaseRequest());
 		body.put("Msg", Msg);
-		HttpRequest request = HttpRequest.post(url).contentType("application/json;charset=utf-8").header("Cookie",
+		final HttpRequest request = HttpRequest.post(url).contentType("application/json;charset=utf-8").header("Cookie",
 				meta.getCookie());
-		new Thread(() -> {
-			try {
-				Thread.sleep(3000);
-				request.send(body.toString());
-				String msgResult = request.body();
-				LOGGER.warn("msgResult:{}", msgResult);
-				request.disconnect();
-			} catch (Exception ex) {
+
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(3000);
+					request.send(body.toString());
+					String msgResult = request.body();
+					LOGGER.warn("msgResult:{}", msgResult);
+					request.disconnect();
+				} catch (Exception ex) {
+				}
 			}
 		}).start();
+
 	}
 
 	public boolean download(JSONObject msg, MsgType msgType) {
@@ -79,7 +85,7 @@ public abstract class AbstractMessageHandler implements IMessageHandler, TxtMess
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-//			headers.put("Range", "bytes=0-");
+			// headers.put("Range", "bytes=0-");
 			ext = "mp4";
 		}
 		if (msgType == MsgType.MEDIA) {
@@ -96,7 +102,7 @@ public abstract class AbstractMessageHandler implements IMessageHandler, TxtMess
 		String host = meta.getBase_uri().endsWith("/") ? meta.getBase_uri() : meta.getBase_uri() + "/";
 		String url = host + msgType.getDownloadPath() + "?MsgID=" + msg.getString("MsgId") + "&skey=" + meta.getSkey()
 				+ "&type=slave";
-		 LOGGER.info("download url:{}",url);
+		LOGGER.info("download url:{}", url);
 		HttpRequest.get(url, params, true).headers(headers).receive(new File(filePath));
 		return true;
 	}

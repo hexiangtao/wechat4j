@@ -46,8 +46,8 @@ public class LoginHandler {
 	 * 获取UUID
 	 */
 	public String getUUID() throws WechatException {
-		HttpRequest request = HttpRequest.get(Config.JS_LOGIN_URL, true, "appid", "wx782c26e4c19acffb", "fun", "new", "lang", "zh_CN", "_",
-				DateKit.getCurrentUnixTime());
+		HttpRequest request = HttpRequest.get(Config.JS_LOGIN_URL, true, "appid", "wx782c26e4c19acffb", "fun", "new",
+				"lang", "zh_CN", "_", DateKit.getCurrentUnixTime());
 		String res = request.body();
 		request.disconnect();
 		if (StringKit.isBlank(res)) {
@@ -80,12 +80,14 @@ public class LoginHandler {
 		if (null == output || !output.exists() || !output.isFile()) {
 			throw new WechatException("获取登陆二维码失败");
 		}
-		EventQueue.invokeLater(() -> {
-			try {
-				UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-				qrCodeFrame = new QRCodeFrame(output.getPath());
-			} catch (Exception e) {
-				e.printStackTrace();
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+					qrCodeFrame = new QRCodeFrame(output.getPath());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 
@@ -99,8 +101,8 @@ public class LoginHandler {
 		String url = meta.getBase_uri() + "/webwxinit?r=" + DateKit.getCurrentUnixTime() + "&lang=zh_CN";
 		JSONObject body = new JSONObject();
 		body.put("BaseRequest", meta.getBaseRequest());
-		HttpRequest request = HttpRequest.post(url).contentType("application/json;charset=utf-8").header("Cookie", meta.getCookie())
-				.send(body.toString());
+		HttpRequest request = HttpRequest.post(url).contentType("application/json;charset=utf-8")
+				.header("Cookie", meta.getCookie()).send(body.toString());
 		String res = request.body();
 		request.disconnect();
 
@@ -171,8 +173,8 @@ public class LoginHandler {
 		baseRequest.put("Skey", this.meta.getSkey());
 		baseRequest.put("DeviceID", this.meta.getDeviceId());
 		this.meta.setBaseRequest(baseRequest);
-		LOGGER.debug("skey [{}],wxsid [{}],wxuin [{}],pass_ticket [{}]", this.meta.getSkey(), this.meta.getWxsid(), this.meta.getWxuin(),
-				this.meta.getPass_ticket());
+		LOGGER.debug("skey [{}],wxsid [{}],wxuin [{}],pass_ticket [{}]", this.meta.getSkey(), this.meta.getWxsid(),
+				this.meta.getWxuin(), this.meta.getPass_ticket());
 		File output = new File("temp.jpg");
 		if (output.exists()) {
 			output.delete();
@@ -196,8 +198,8 @@ public class LoginHandler {
 		body.put("ToUserName", meta.getUser().getString("UserName"));
 		body.put("ClientMsgId", DateKit.getCurrentUnixTime());
 
-		HttpRequest request = HttpRequest.post(url).contentType("application/json;charset=utf-8").header("Cookie", meta.getCookie())
-				.send(body.toString());
+		HttpRequest request = HttpRequest.post(url).contentType("application/json;charset=utf-8")
+				.header("Cookie", meta.getCookie()).send(body.toString());
 		String res = request.body();
 		request.disconnect();
 
@@ -221,8 +223,9 @@ public class LoginHandler {
 		body.put("BaseRequest", meta.getBaseRequest());
 
 		HttpRequest request = HttpRequest
-				.get(url, true, "r", DateKit.getCurrentUnixTime() + StringKit.getRandomNumber(5), "skey", meta.getSkey(), "uin", meta.getWxuin(),
-						"sid", meta.getWxsid(), "deviceid", meta.getDeviceId(), "synckey", meta.getSynckey(), "_", System.currentTimeMillis())
+				.get(url, true, "r", DateKit.getCurrentUnixTime() + StringKit.getRandomNumber(5), "skey",
+						meta.getSkey(), "uin", meta.getWxuin(), "sid", meta.getWxsid(), "deviceid", meta.getDeviceId(),
+						"synckey", meta.getSynckey(), "_", System.currentTimeMillis())
 				.header("Cookie", meta.getCookie());
 
 		LOGGER.debug(request.toString());
@@ -255,7 +258,8 @@ public class LoginHandler {
 	public String waitForLogin() throws WechatException {
 		int tip = 1;
 		String url = "https://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login";
-		HttpRequest request = HttpRequest.get(url, true, "tip", tip, "uuid", meta.getUuid(), "_", DateKit.getCurrentUnixTime());
+		HttpRequest request = HttpRequest.get(url, true, "tip", tip, "uuid", meta.getUuid(), "_",
+				DateKit.getCurrentUnixTime());
 		LOGGER.warn("等待登陆");
 		String res = request.body();
 		request.disconnect();
@@ -268,7 +272,7 @@ public class LoginHandler {
 			throw new WechatException("扫描二维码验证失败");
 		}
 		if (code.equals("201")) {
-			 LOGGER.info("成功扫描,请在手机上点击确认以登录");
+			LOGGER.info("成功扫描,请在手机上点击确认以登录");
 			tip = 0;
 		}
 

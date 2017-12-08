@@ -149,7 +149,7 @@ public abstract class AbstractMessageHandler implements IMessageHandler, TxtMess
 			return false;
 		}
 
-		if (isSlefSend(msg)) {
+		if (isSelfSend(msg)) {
 			LOGGER.info("你发送了一条消息 ");
 			return true;
 		}
@@ -164,7 +164,7 @@ public abstract class AbstractMessageHandler implements IMessageHandler, TxtMess
 
 	}
 
-	public boolean isSlefSend(JSONObject msg) {
+	public boolean isSelfSend(JSONObject msg) {
 		return msg.getString("FromUserName").equals(this.meta.getUser().getString("UserName"));
 
 	}

@@ -25,7 +25,6 @@ public class MessageHandlerFactory {
 
 	private void register() {
 		handlers.put(MsgType.TXT, new TxtMessageHandler(meta));
-		handlers.put(MsgType.TXT, new TxtMessageHandler(meta));
 		handlers.put(MsgType.VOICE, new VoiceMessageHandler(meta));
 		handlers.put(MsgType.PICTURE, new PictureMessageHandler(meta));
 		handlers.put(MsgType.SHARE_MP, new MpMessageHandler(meta));

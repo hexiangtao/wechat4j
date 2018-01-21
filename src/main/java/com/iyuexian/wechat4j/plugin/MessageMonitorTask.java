@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import com.blade.kit.json.JSONObject;
 import com.iyuexian.wechat4j.WechatMeta;
+import com.iyuexian.wechat4j.http.WechatApiUtils;
 import com.iyuexian.wechat4j.plugin.message.MessageManager;
-import com.iyuexian.wechat4j.webweixin.WechatApiUtils;
 
 public class MessageMonitorTask extends Task {
 

@@ -4,7 +4,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.iyuexian.wechat4j.webweixin.WechatApiUtils;
+import com.iyuexian.wechat4j.http.WechatApiUtils;
 import com.iyuexian.wechat4j.webweixin.entity.RestResponse;
 
 @WebServlet("/uuid")

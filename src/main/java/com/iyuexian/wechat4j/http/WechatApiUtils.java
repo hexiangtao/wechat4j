@@ -1,4 +1,4 @@
-package com.iyuexian.wechat4j.webweixin;
+package com.iyuexian.wechat4j.http;
 
 import java.io.File;
 import java.util.Date;

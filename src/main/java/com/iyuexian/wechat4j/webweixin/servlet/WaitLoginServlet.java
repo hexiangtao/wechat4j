@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.iyuexian.wechat4j.http.WechatApiUtils;
 import com.iyuexian.wechat4j.util.Matchers;
-import com.iyuexian.wechat4j.webweixin.WechatApiUtils;
 import com.iyuexian.wechat4j.webweixin.entity.RestResponse;
 import com.iyuexian.wechat4j.webweixin.service.UserAccountService;
 

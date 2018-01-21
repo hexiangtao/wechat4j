@@ -10,10 +10,10 @@ import org.slf4j.LoggerFactory;
 import com.blade.kit.json.JSONArray;
 import com.blade.kit.json.JSONObject;
 import com.iyuexian.wechat4j.config.Constant;
+import com.iyuexian.wechat4j.http.WechatApiUtils;
 import com.iyuexian.wechat4j.plugin.QRCodeWindow;
 import com.iyuexian.wechat4j.plugin.Storage;
 import com.iyuexian.wechat4j.util.Matchers;
-import com.iyuexian.wechat4j.webweixin.WechatApiUtils;
 
 public class WechatStartup {
 

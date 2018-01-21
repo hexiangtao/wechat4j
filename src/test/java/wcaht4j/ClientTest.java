@@ -1,4 +1,4 @@
-package com.iyuexian.wechat4j.test;
+package wcaht4j;
 
 
 import com.blade.kit.json.JSONArray;
@@ -28,7 +28,6 @@ public class ClientTest {
 				System.out.println("userName:" + userName + ",nickName:" + nickName);
 				messageHandler.webwxsendmsg("你好。。。。http://www.baidu.com", userName);
 			}
-
 		}
 
 	}

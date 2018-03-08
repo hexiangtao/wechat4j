@@ -12,7 +12,7 @@ import com.blade.kit.json.JSONObject;
 import com.iyuexian.wechat4j.config.Constant;
 import com.iyuexian.wechat4j.http.WechatApiUtils;
 import com.iyuexian.wechat4j.plugin.QRCodeWindow;
-import com.iyuexian.wechat4j.plugin.Storage;
+import com.iyuexian.wechat4j.plugin.WxLocalCache;
 import com.iyuexian.wechat4j.util.Matchers;
 
 public class WechatStartup {
@@ -55,9 +55,10 @@ public class WechatStartup {
 			WechatMeta meta = WechatApiUtils.newWechatMeta(res);
 			WechatApiUtils.login(meta);
 			JSONObject wxInitObj = WechatApiUtils.wxInit(meta);
-			initLatestContactUser(wxInitObj);
 			WechatApiUtils.openStatusNotify(meta);
 			this.meta = meta;
+			JSONArray contactList = wxInitObj.get("ContactList").asArray();
+			WxLocalCache.init(this.meta).setLatestContactList(contactList);
 			break;
 		}
 	}
@@ -76,22 +77,6 @@ public class WechatStartup {
 			}
 		});
 
-	}
-
-	public void initLatestContactUser(JSONObject wxInitObj) {
-
-		JSONArray contactList = wxInitObj.get("ContactList").asArray();
-		for (int i = 0; i < contactList.size(); i++) {
-			JSONObject item = contactList.get(i).asJSONObject();
-			logger.info("load user,item:{}", item.getString("NickName"));
-			String userName = item.getString("UserName");
-			// 最近联系的群
-			if (userName.startsWith("@@")) {
-				Storage.instance().addLasetChatroomUserName(userName);
-				continue;
-			}
-			// TODO 最近联系的用户
-		}
 	}
 
 	private void closeQrWindow() {

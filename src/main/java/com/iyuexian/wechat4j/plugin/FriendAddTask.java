@@ -8,20 +8,29 @@ import org.slf4j.LoggerFactory;
 import com.blade.kit.json.JSONArray;
 import com.blade.kit.json.JSONObject;
 import com.iyuexian.wechat4j.WechatMeta;
+import com.iyuexian.wechat4j.http.WechatApiUtils;
 
-public class FriendAutoAddTask extends Task {
+public class FriendAddTask implements Runnable {
 	private long sleepSecond = 5;
 	private String chatRoomName = "";
-	protected Logger logger = LoggerFactory.getLogger(FriendAutoAddTask.class);
+	protected Logger logger = LoggerFactory.getLogger(FriendAddTask.class);
+	private WechatMeta meta;
 
-	private ContactManager contactHandler;
+	public void start() {
+		new Thread(this).start();
+	}
 
-	public FriendAutoAddTask(WechatMeta meta) {
-		this.contactHandler = new ContactManager(meta);
+	public FriendAddTask(WechatMeta meta) {
+	}
+
+	public FriendAddTask(WechatMeta meta, String chatRoom, long sleepSecond) {
+		this.meta = meta;
+		this.sleepSecond = sleepSecond;
+		this.chatRoomName = chatRoom;
 	}
 
 	@Override
-	public void initTask() {
+	public void run() {
 		JSONArray rooms = Storage.instance().getLatestChatRoomList();
 		for (int i = 0; i < rooms.size(); i++) {
 			JSONObject room = rooms.get(i).asJSONObject();
@@ -32,11 +41,11 @@ public class FriendAutoAddTask extends Task {
 			if (!room.getString("NickName").contains(chatRoomName)) {
 				continue;
 			}
-			beginAddFirend(room);
+			addFriend(room);
 		}
 	}
 
-	private void beginAddFirend(JSONObject room) {
+	private void addFriend(JSONObject room) {
 		JSONArray members = room.get("MemberList").asArray();
 		for (int j = 0; j < members.size(); j++) {
 			JSONObject member = members.get(j).asJSONObject();
@@ -48,7 +57,7 @@ public class FriendAutoAddTask extends Task {
 			}
 
 			logger.info("开始添加好友 【{}】", nickName);
-			contactHandler.addFriend(userName, "nihao");
+			WechatApiUtils.addFriend(meta, userName, "nihao");
 			long sleep = this.sleepSecond + new Random().nextInt(100);
 			logger.info("休眠:{}秒", sleep);
 			try {

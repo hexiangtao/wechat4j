@@ -45,7 +45,8 @@ public class ContactManager {
 
 	public void initLatestChatroom(List<String> chatRommNames) {
 		JSONArray groupArray = new JSONArray();
-//		for (String groupUserName : Storage.instance().getLatestChatRoomUserNameList()) {
+		// for (String groupUserName :
+		// Storage.instance().getLatestChatRoomUserNameList()) {
 		for (String groupUserName : chatRommNames) {
 			JSONObject groupItem = new JSONObject();
 			groupItem.put("UserName", groupUserName);
@@ -79,46 +80,6 @@ public class ContactManager {
 		JSONArray memberList = jsonObject.get("ContactList").asArray();
 		// LOGGER.info("获取群成员:{}", memberList);
 		return memberList;
-
-	}
-
-	/**
-	 * 
-	 * @param userName
-	 * @param status
-	 *            2,default=2
-	 * @param verifyContent
-	 * @param autoUpdate
-	 */
-	public JSONObject addFriend(String userName, String verifyContent) {
-		String url = "{0}/webwxverifyuser?r={1}&pass_ticket={2}";
-		url = MessageFormat.format(url, meta.getBase_uri(), DateKit.getCurrentUnixTime(), meta.getPass_ticket());
-
-		JSONObject body = initFriendRequsetParams(userName, verifyContent);
-		JSONObject resp = httpRequsetUtil.postJSON(url, body);
-		return resp;
-
-	}
-
-	public JSONObject initFriendRequsetParams(String userName, String verifyContent) {
-
-		JSONObject body = new JSONObject();
-		body.put("BaseRequest", meta.getBaseRequest());
-		body.put("Opcode", 2);
-		body.put("VerifyUserListSize", 1);
-		JSONArray VerifyUserList = new JSONArray();
-		JSONObject verifyItem = new JSONObject();
-		verifyItem.put("Value", userName);
-		verifyItem.put("VerifyUserTicket", "");
-		VerifyUserList.add(verifyItem);
-		body.put("VerifyUserList", VerifyUserList);
-		body.put("VerifyContent", verifyContent);
-		body.put("SceneListCount", 1);
-		JSONArray sceneList = new JSONArray();
-		sceneList.add(33);
-		body.put("SceneList", sceneList);
-		body.put("skey", meta.getSkey());
-		return body;
 
 	}
 

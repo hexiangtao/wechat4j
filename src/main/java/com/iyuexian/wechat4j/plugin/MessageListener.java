@@ -10,19 +10,24 @@ import com.iyuexian.wechat4j.WechatMeta;
 import com.iyuexian.wechat4j.http.WechatApiUtils;
 import com.iyuexian.wechat4j.plugin.message.MessageManager;
 
-public class MessageMonitorTask extends Task {
+public class MessageListener implements Runnable {
 
-	private Logger logger = LoggerFactory.getLogger(MessageMonitorTask.class);
+	private Logger logger = LoggerFactory.getLogger(MessageListener.class);
 	private WechatMeta meta;
 	private MessageManager messageManager;
 
-	public MessageMonitorTask(WechatMeta meta) {
+	public MessageListener(WechatMeta meta) {
 		this.meta = meta;
 		messageManager = new MessageManager(meta);
 	}
 
+	public void listen() {
+		new Thread(this).start();
+	}
+
+	
 	@Override
-	public void initTask() {
+	public void run() {
 		WechatApiUtils.choiceSyncLine(meta);
 		while (true) {
 			int[] arr = WechatApiUtils.syncCheck(meta); // 消息检查

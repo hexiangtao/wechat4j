@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSON;
 import com.iyuexian.wechat4j.WechatMeta;
 import com.iyuexian.wechat4j.http.WechatApiUtils;
-import com.iyuexian.wechat4j.plugin.MessageMonitorTask;
+import com.iyuexian.wechat4j.plugin.MessageListener;
 import com.iyuexian.wechat4j.util.Matchers;
 import com.iyuexian.wechat4j.webweixin.dao.AccountConfigDao;
 import com.iyuexian.wechat4j.webweixin.dao.UserAccountDao;
@@ -66,8 +66,8 @@ public class UserAccountService {
 		WechatApiUtils.wxInit(meta);
 		WechatApiUtils.openStatusNotify(meta);
 		// WechatApiUtils.getContactList(meta); // 获取联系人列表
-		MessageMonitorTask messageMonitorTask = new MessageMonitorTask(meta);
-		messageMonitorTask.start();
+		MessageListener listener = new MessageListener(meta);
+		listener.listen();
 	}
 
 	public RestResponse login(String mobile, String pwd) {

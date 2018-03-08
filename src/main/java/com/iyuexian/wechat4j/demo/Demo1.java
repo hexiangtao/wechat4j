@@ -1,4 +1,4 @@
-package com.iyuexian.wechat4j;
+package com.iyuexian.wechat4j.demo;
 
 import com.blade.kit.json.JSONArray;
 import com.blade.kit.json.JSONObject;

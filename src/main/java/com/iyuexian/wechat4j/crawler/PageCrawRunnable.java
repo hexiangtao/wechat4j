@@ -49,7 +49,7 @@ public class PageCrawRunnable implements Runnable {
 			Logger.debug("get:{}", link);
 			try {
 				Document doc = Jsoup.connect(link).get();
-				pubEvent(link,doc);
+				pubEvent(link, doc, linkCollection);
 			} catch (Exception e) {
 				Logger.error("抓取页面失败:{}", e.getLocalizedMessage());
 			}
@@ -57,12 +57,12 @@ public class PageCrawRunnable implements Runnable {
 
 	}
 
-	public void pubEvent(String url,Document doc) {
+	public void pubEvent(String url, Document doc, LinkCollection linkCollection) {
 		if (listeners == null || listeners.size() == 0) {
 			return;
 		}
 		for (DocumentListener documentListener : listeners) {
-			documentListener.onDownload(url,doc);
+			documentListener.onDownload(url, doc, linkCollection);
 		}
 
 	}

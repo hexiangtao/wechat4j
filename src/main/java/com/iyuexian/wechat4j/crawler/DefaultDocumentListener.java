@@ -3,8 +3,6 @@ package com.iyuexian.wechat4j.crawler;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 import org.jsoup.nodes.Document;
@@ -14,26 +12,30 @@ import org.jsoup.select.Elements;
 public class DefaultDocumentListener implements DocumentListener {
 
 	private String host;
-	private LinkCollection linkCollection;
+	private String savePath;
 
-	public DefaultDocumentListener(LinkCollection linkCollection, String host) {
-		this.linkCollection = linkCollection;
+	public DefaultDocumentListener(String host) {
+		this(host, null);
+	}
+
+	public DefaultDocumentListener(String host, String savePath) {
 		this.host = host;
+		this.savePath = savePath;
 	}
 
 	@Override
-	public void onDownload(String url, Document doc) {
+	public void onDownload(String url, Document doc, LinkCollection linkCollection) {
 		Logger.info("title:{}", doc.title());
 
-		String line = "### [" + doc.title() + "](" + url + ")\n";
-
 		try {
-			Path path = Paths.get("D:/vqq.md");
-			if (!path.toFile().exists()) {
-				File f = new File("D:/vqq.md");
-				f.createNewFile();
+			if (this.savePath != null && this.savePath.trim().length() > 0) {
+				String line = "### [" + doc.title() + "](" + url + ")\n";
+				File f = new File(savePath);
+				if (!f.exists()) {
+					f.createNewFile();
+				}
+				Files.write(f.toPath(), line.getBytes(), StandardOpenOption.APPEND);
 			}
-			Files.write(Paths.get("D:/vqq.md"), line.getBytes(), StandardOpenOption.APPEND);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

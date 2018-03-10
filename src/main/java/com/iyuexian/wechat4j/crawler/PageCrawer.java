@@ -28,7 +28,7 @@ public class PageCrawer {
 		if (listener != null && listener.length > 0) {
 			this.listeners = Arrays.asList(listener);
 		} else {
-			this.listeners = Arrays.asList(new DefaultDocumentListener(linkCollection, host));
+			this.listeners = Arrays.asList(new DefaultDocumentListener(host));
 		}
 
 		String firtUrl = host.startsWith("http") ? host : host.startsWith("https:") ? host : "http://" + host;

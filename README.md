@@ -8,10 +8,12 @@
 WechatMeta meta = WechatStartup.login();	
 ```
 登陆成功后，会返回WechatMeta实例，里面包含了当前扫码用户的登陆信息，后面所有的功能都需要该实例
-WechatApiUtils类封装了web微信的相关接口，具体功能实现在plugin及其实子包里，您也可以在这基础上扩展
+WechatApiUtil类封装微信的相关接口，具体功能实现在plugin及其实子包里，您也可以在这基础上扩展
 
 
-## 2:以web方式启动，需要在config.properties文件里配置mysql的帐号密码
+
+### 下载jar包体验
+![demo](https://github.com/hexiangtao/wechat4j/blob/master/assert/wechat4j.jar)
 
 
 #### 代码示例

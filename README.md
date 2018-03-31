@@ -15,9 +15,23 @@ WechatApiUtil类封装微信的相关接口，具体功能实现在plugin及其�
 ### 下载jar包体验
 [wechat4j.jar](https://github.com/hexiangtao/wechat4j/blob/master/assert/wechat4j.jar)
 
+#####运行方式
+````
+java -jar  wechat4j.jar
+````
+
+
+启动后控制如下:
+![demo](https://github.com/hexiangtao/wechat4j/blob/master/assert/console1.png)
+
 
 #### 代码示例
 ![demo](https://github.com/hexiangtao/wechat4j/blob/master/assert/code0.png)
+
+
+
+##########运行示例图
+![demo](https://github.com/hexiangtao/wechat4j/blob/master/assert/demo1.png)
 
 
 QQ交流群:580889921

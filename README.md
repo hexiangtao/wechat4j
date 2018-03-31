@@ -1,6 +1,9 @@
 # wechat4j
 用java实现的微信客户端，支持自动聊天, 消息监听，自动回复，添加好友，获取群成员列表,自动记录聊天记录，自动下载图片，语音，视频消息
 
+QQ交流群:580889921
+
+
 # 启动方式
 ###  1:控制台启动
     自定任意类，在main方法下用WecahtStartup.login()实现扫码登陆
@@ -21,7 +24,7 @@ java -jar  wechat4j.jar
 ````
 
 
-启动后控制如下:
+启动后控制台如下:
 ![demo](https://github.com/hexiangtao/wechat4j/blob/master/assert/console1.png)
 
 
@@ -34,6 +37,6 @@ java -jar  wechat4j.jar
 ![demo](https://github.com/hexiangtao/wechat4j/blob/master/assert/demo1.png)
 
 
-QQ交流群:580889921
+
 
 

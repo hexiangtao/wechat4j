@@ -13,7 +13,7 @@ WechatApiUtil类封装微信的相关接口，具体功能实现在plugin及其�
 
 
 ### 下载jar包体验
-![demo](https://github.com/hexiangtao/wechat4j/blob/master/assert/wechat4j.jar)
+[wechat4j.jar](https://github.com/hexiangtao/wechat4j/blob/master/assert/wechat4j.jar)
 
 
 #### 代码示例

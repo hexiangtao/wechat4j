@@ -1,0 +1,56 @@
+spring:
+  # Development profile with H2 in-memory database for testing
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: 
+    driver-class-name: org.h2.Driver
+    
+  # H2 console for development
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  
+  # JPA for H2
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+        
+  # Disable Redis for development
+  data:
+    redis:
+      repositories:
+        enabled: false
+        
+  # Disable RabbitMQ for development
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+
+# 微信相关配置 - 开发环境
+wechat:
+  login-timeout: 10
+  message-poll-interval: 2000
+  download-path: ./temp/downloads/
+  qrcode-path: ./temp/qrcodes/
+  auto-reply-enabled: false
+  robot:
+    enabled: false
+
+# 日志配置 - 开发环境
+logging:
+  level:
+    com.iyuexian.wechat4j: DEBUG
+    org.springframework.security: INFO
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

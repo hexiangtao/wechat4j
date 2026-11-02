@@ -1,0 +1,125 @@
+spring:
+  application:
+    name: wechat4j-spring-boot
+  
+  # 数据源配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/wechat4j?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+  
+  # JPA配置
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+  
+  # Redis配置
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+    database: 0
+    jedis:
+      pool:
+        max-active: 10
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+    timeout: 3000ms
+  
+  # RabbitMQ配置
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    virtual-host: /
+  
+  # Web配置
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+  
+  # 安全配置
+  security:
+    user:
+      name: admin
+      password: ${SECURITY_PASSWORD:admin123}
+
+# 服务器配置
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /api
+  compression:
+    enabled: true
+
+# 日志配置
+logging:
+  level:
+    com.iyuexian.wechat4j: INFO
+    org.springframework.security: DEBUG
+  pattern:
+    console: '%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n'
+  file:
+    name: logs/wechat4j.log
+
+# 微信相关配置
+wechat:
+  # 登录超时时间（分钟）
+  login-timeout: 5
+  # 消息监听间隔（毫秒）
+  message-poll-interval: 1000
+  # 文件下载目录
+  download-path: ${user.home}/wechat4j/downloads/
+  # 二维码保存目录
+  qrcode-path: ${user.home}/wechat4j/qrcodes/
+  # 自动回复开关
+  auto-reply-enabled: true
+  # 机器人回复配置
+  robot:
+    enabled: false
+    api-url: http://www.tuling123.com/openapi/api
+    api-key: ${TULING_API_KEY:}
+
+# API文档配置
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: method
+  info:
+    title: WeChat4j API Documentation
+    description: WeChat client REST API
+    version: '2.0.0'
+    contact:
+      name: WeChat4j Team
+      url: https://github.com/hexiangtao/wechat4j
+
+# 管理端点配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when-authorized
+  info:
+    build:
+      enabled: true
